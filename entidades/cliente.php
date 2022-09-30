@@ -169,9 +169,9 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
         $aResultado = array();
         if($resultado){
             //Convierte el resultado en un array asociativo
-
-            while($fila = $resultado->fetch_assoc()){
-                $entidadAux = new Cliente();
+//fila trae los satos 
+            while($fila = $resultado->fetch_assoc()){ // mientras fila tenga datos lo va a hacer una y otra vez
+                $entidadAux = new Cliente(); //entidadAux me sirve para crear el objeto
                 $entidadAux->idcliente = $fila["idcliente"];
                 $entidadAux->nombre = $fila["nombre"];
                 $entidadAux->cuit = $fila["cuit"];
@@ -188,7 +188,7 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
                 $aResultado[] = $entidadAux;
             }
         }
-        return $aResultado;
+        return $aResultado; //finalizado el bucle devuelve el resultado
     }
 
 }
