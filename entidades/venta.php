@@ -9,10 +9,16 @@ class Venta //Cliente es una entidad solo en las tables es en prural
     private $cantidad;
     private $preciounitario;
     private $total;
+
+    private $nombre_cliente;
+    private $nombre_producto;
    
 
     public function __construct() //constructor por defecto
     {
+        $this->cantidad = 0;
+        $this->preciounitario = 0.0;
+        $this->total = 0.0;
 
     }
 
@@ -30,11 +36,14 @@ class Venta //Cliente es una entidad solo en las tables es en prural
     public function cargarFormulario($request)
     {
         $this->idventa = isset($request["id"]) ? $request["id"] : "";
-        $this->fk_idcliente = isset($request["txtCliente"]) ? $request["txtCliente"] : "";
-        $this->fecha = isset($request["txtFecha"]) ? $request["txtFecha"] : "";
-        $this->cantidad= isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
-        $this->preciounitario = isset($request["txtPreciounitario"]) ? $request["txtPreciounitario"] : "";
-        $this->total = isset($request["lstTotal"]) ? $request["lstTotal"] : "";
+        $this->fk_idcliente = isset($request["lstCliente"]) ? $request["lstCliente"] : "";
+        $this->fk_idproducto = isset($request["lstProducto"])? $request["lstProducto"]: "";
+        if(isset($request["txtAnio"]) && isset($request["txtMes"]) && isset($request["txtDia"])){
+            $this->fecha = $request["txtAnio"] . "-" .  $request["txtMes"] . "-" .  $request["txtDia"] . " " . $request["txtHora"];
+        }
+        $this->cantidad= isset($request["txtCantidad"]) ? $request["txtCantidad"] : 0;
+        $this->preciounitario = isset($request["txtPreciouni"]) ? $request["txtPreciouni"] :0;
+        $this->total = $this->preciounitario * $this->cantidad;
        
     }
 
@@ -54,9 +63,9 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                     $this->fk_idcliente,
                     $this->fk_idproducto, 
                     '$this->fecha',
-                    '$this->cantidad',
-                    '$this->preciounitario',
-                    '$this->total',
+                    $this->cantidad,
+                    $this->preciounitario,
+                    $this->total,
                    
                 );";
                 //si tienen '' porque es una stream '$this->nombre',
@@ -111,7 +120,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                         fecha,
                         cantidad,
                         preciounitario,
-                        total,
+                        total
                         
                 FROM ventas
                 WHERE idventa = $this->idventa";
@@ -154,7 +163,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
             //Convierte el resultado en un array asociativo
 //fila trae los satos 
             while($fila = $resultado->fetch_assoc()){ // mientras fila tenga datos lo va a hacer una y otra vez
-                $entidadAux = new Cliente(); //entidadAux me sirve para crear el objeto
+                $entidadAux = new Venta(); //entidadAux me sirve para crear el objeto
                 $entidadAux->idventa = $fila["idventa"];
                 $entidadAux->fk_idcliente= $fila["fk_idcliente"];
                 $entidadAux->fk_idproducto = $fila["fk_idproducto"];

@@ -4,11 +4,12 @@ class Producto //Cliente es una entidad solo en las tables es en prural
 {
     private $idproducto;
     private $nombre;
+    private $fk_idtipoproducto;
     private $cantidad;
     private $precio;
     private $descripcion;
     private $imagen;
-    private $fk_idtipoproducto;
+    
     
 
     public function __construct() //constructor por defecto
@@ -33,15 +34,13 @@ $this->precio=0.0;
     {
         $this->idproducto = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
+        $this->fk_idproducto = isset($request["lstTipoProducto"]) ? $request["lstTipoProducto"] : "";
         $this->cantidad = isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
         $this->precio = isset($request["txtPrecio"]) ? $request["txtPrecio"] : "";
         $this->descripcion = isset($request["txtDescripcion"]) ? $request["txtDescripcion"] : "";
-        $this->imagen = isset($request["txtImagen"]) ? $request["txtImagen"] : "";
-        $this->fk_idproducto = isset($request["txtTipoproducto"]) ? $request["txtTipoproducto"] : "";
-     
-        if (isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])) {
-            $this->fecha_nac = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"];
-        }
+    
+       
+    
     }
 
     public function insertar()
@@ -51,19 +50,21 @@ $this->precio=0.0;
         //Arma la query
         $sql = "INSERT INTO productos (
                     nombre,
+                    fk_idtipoproducto,
                     cantidad,
                     precio,
                     descripcion,
                     imagen,
-                    fk_idtipoproducto
+                    
                    
                 ) VALUES  (
                     '$this->nombre',
+                    $this->fk_idtipoproducto,
                     $this->cantidad, 
                     $this->precio, 
                     '$this->descripcion',
                     '$this->imagen',
-                    $this->fk_idtipoproducto
+                    
                     
                 );"; //la comilla simple' ' va a ir solo par los valores que NO son de tipo numerico
                 //si tienen '' porque es una stream '$this->nombre',
@@ -114,11 +115,12 @@ $this->precio=0.0;
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idproducto,
                         nombre,
+                        fk_idtipoproducto,
                         cantidad,
                        precio,
                         descripcion,
-                        imagen,
-                        fk_idtipoproducto,
+                        imagen
+                        
                        
                 FROM productos
                 WHERE idproducto = $this->idproducto";
@@ -130,11 +132,12 @@ $this->precio=0.0;
         if ($fila = $resultado->fetch_assoc()) {
             $this->idcliente = $fila["idproducto"];
             $this->nombre = $fila["nombre"];
+            $this->fk_idtipoproducto = $fila["fk_idtipoproducto"];
             $this->cantidad = $fila["cantidad"];
             $this->precio = $fila["precio"];
             $this->descripcion = $fila["descripcion"];
             $this->imagen = $fila["imagen"];
-            $this->fk_idtipoproducto = $fila["fk_idtipoproducto"];
+            
            
         }
         $mysqli->close();
@@ -146,11 +149,12 @@ $this->precio=0.0;
         $sql = "SELECT 
                     idproducto,
                         nombre,
+                        fk_idtipoproducto,
                         cantidad,
                        precio,
                         descripcion,
-                        imagen,
-                        fk_idtipoproducto,
+                        imagen
+                        
                        
                 FROM productos";
         if (!$resultado = $mysqli->query($sql)) {
@@ -165,11 +169,12 @@ $this->precio=0.0;
                 $entidadAux = new Producto(); //entidadAux me sirve para crear el objeto
                 $entidadAux->idproducto = $fila["idproducto"];
                 $entidadAux->nombre = $fila["nombre"];
+                $entidadAux->fk_idtipoproducto = $fila["fk_idtipoproducto"];
                 $entidadAux->cantidad = $fila["cantidad"];
                 $entidadAux->precio = $fila["precio"];
                 $entidadAux->descripcion= $fila["descripcion"];
                 $entidadAux->imagen = $fila["imagen"];
-                $entidadAux->fk_idtipoproducto = $fila["fk_idtipoproducto"];
+                
                
                 $aResultado[] = $entidadAux;
             }

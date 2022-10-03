@@ -1,11 +1,14 @@
 <?php
-session_start(); //hacemos uso de la variable de sesion para luego eliminarlas
-if ($_POST)
-{if (isset($_POST["btnCerrar"])){
-  session_destroy(); //antes de redireccionar eliminamos las variables de sesion, porque cerramos la sesion
-  header("Location:login.php");
-}}
+if(!isset($_SESSION["nombre"])){
+  header("location:login.php");
+}
 
+if($_POST){
+  if(isset($_POST["btnCerrar"])){ /* Analizamos si es la accion del boton cerrar */
+      session_destroy();
+      header("location:login.php");
+  }
+}
 ?>
 
 <!DOCTYPE html>

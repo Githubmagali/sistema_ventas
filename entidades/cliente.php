@@ -129,7 +129,8 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
-        //Convierte el resultado en un array asociativo
+        //Convierte el resultado en un array asociativo. Va de derecha a iz, le pregunta a fetch_assoc almacena todo eso en fila y si fila tiene datos
+        //le almacena datos al prodpio objeto
         if ($fila = $resultado->fetch_assoc()) {
             $this->idcliente = $fila["idcliente"];
             $this->nombre = $fila["nombre"];

@@ -38,7 +38,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
         //Instancia la clase mysqli con el constructor parametrizado
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         //Arma la query
-        $sql = "INSERT INTO tipoproductos (
+        $sql = "INSERT INTO tipo_productos (
                     nombre
                    
                    
@@ -63,8 +63,8 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
     {
 
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        $sql = "UPDATE tipoprodutos SET
-                nombre = '". $this->nombre. "',
+        $sql = "UPDATE tipo_produtos SET
+                nombre = ' $this->nombre',
                 
                 WHERE idtipoproducto = ".$this->idtipoproducto;
 
@@ -77,7 +77,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
     public function eliminar()
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        $sql = "DELETE FROM tipoproductos WHERE idtipoproducto= " . $this->idtipoprodcuto;
+        $sql = "DELETE FROM tipo_productos WHERE idtipoproducto= " . $this->idtipoprodcuto;
         //Ejecuta la query
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -91,15 +91,15 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
         $sql = "SELECT idtipoproducto,
                        
                        
-                FROM tipoproductos
-                WHERE idtipoproducto = $this->idproducto";
+                FROM tipo_productos
+                WHERE idtipoproducto =  $this->idproducto";
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         //Convierte el resultado en un array asociativo
         if ($fila = $resultado->fetch_assoc()) {
-            $this->idcliente = $fila["idproducto"];
+            
             $this->nombre = $fila["nombre"];
           
            
@@ -115,7 +115,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
                         nombre,
                         
                        
-                FROM tipoproductos";
+                FROM tipo_productos";
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
