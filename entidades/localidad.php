@@ -18,6 +18,38 @@ class Localidad{
         $this->$atributo = $valor;
         return $this;
     }
+
+    public function obtenerTodos()
+    {
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+        $sql = "SELECT
+                    idlocalidad,
+                    nombre,
+                    fk_idprovincia,
+                    cod_postal
+                FROM localidades
+                ORDER BY nombre ASC";
+        if (!$resultado = $mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+        if ($resultado) {
+            //Convierte el resultado en un array asociativo
+
+            while ($fila = $resultado->fetch_assoc()) {
+                $entidad = new Localidad();
+                $entidad->idlocalidad = $fila["idlocalidad"];
+                $entidad->nombre = $fila["nombre"];
+                $entidad->fk_idprovincia = $fila["fk_idprovincia"];
+                $entidad->cod_postal = $fila["cod_postal"];
+                $aResultado[] = $entidad;
+
+            }
+        }
+        return $aResultado;
+    }
+
     
     public function obtenerPorProvincia($idProvincia){
         $aLocalidades = null;

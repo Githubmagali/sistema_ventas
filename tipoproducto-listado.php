@@ -26,7 +26,7 @@ include_once("header.php");
     <?php foreach($aTipoProductos as $tipo) { ?>
         <tr>
             <td><?php echo $tipo->nombre; ?></td>
-            <td style="width: 110px;">
+            <td>
         <a href="tipoproducto-formulario.php?id=<?php echo $tipo->idtipoproducto; ?>"><i class="fas fa-search"></i></a>
     </td>
         </tr>

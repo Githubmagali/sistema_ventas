@@ -29,6 +29,9 @@ if (isset($_GET["id"]) && $_GET["id"] > 0) {
     $producto->obtenerPorId();
 }
 
+$tipoProducto = new TipoProducto();
+$aTipoProductos = $tipoProducto->obtenerTodos();
+
 
 include_once "header.php";
 ?>
@@ -52,10 +55,17 @@ include_once "header.php";
             </div>
             <div class="col-6 form-group">
 <label for="txtNombre">Tipo de productos:</label>
-<select name="lstTipoProducto" id="lstTipoProducto" class="form-control" required>
+<select name="lstTipoProducto" id="lstTipoProducto" class="form-control selectpicker"data-live-search="true" required>
 <option value="" disabled selected>Seleccionar</option>
-<?php foreach ($aTipoProductos as $tipo){ ?>
-    <?php }?> </select>
+
+<?php foreach ($aTipoProductos as $tipo): ?>
+    <?php if ($tipo->idtipoproducto == $producto->fk_idtipoproducto): ?>
+        <option selected  value="<?php echo $tipo->idtipoproducto; ?>"><?php echo $tipo->nombre; ?></option>
+    <?php else : ?> 
+        <option value="<?php echo $tipo->idtipoproducto; ?>"><?php echo $tipo->nombre; ?></option>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        </select>
             </div>
             <div class="col-6 form-group">
                     <label for="txtCantidad">Cantidad:</label>

@@ -46,6 +46,10 @@ if(isset($_GET["id"]) && $_GET["id"] > 0){
 $provincia = new Provincia();
 $aProvincias = $provincia->obtenerTodos();
 
+
+$localidad = new Localidad();
+$aLocalidades = $localidad->obtenerTodos();
+
 include_once("header.php"); 
 ?>
         <!-- Begin Page Content -->
@@ -130,10 +134,10 @@ include_once("header.php");
                     <div class="row panel-body p-3">
                         <div class="col-6 form-group">
                             <label for="txtTelefono">Provincia:</label>
-                            <select class="form-control" name="lstProvincia" id="lstProvincia" onchange="fBuscarLocalidad()" required>
+                            <select class="form-control selectpicker" name="lstProvincia" id="lstProvincia" data-live-search="true" required>
                                 <option value="" disabled selected>Seleccionar</option>
                                 <?php foreach($aProvincias as $provincia): ?>
-                                    <?php if($cliente->fk_idprovincia == $provincia->idprovincia): ?>
+                                    <?php if($provincia->idprovincia == $provincia->idprovincia): ?>
                                         <option selected value="<?php echo $provincia->idprovincia; ?>"><?php echo $provincia->nombre; ?></option>
                                     <?php else: ?>
                                         <option value="<?php echo $provincia->idprovincia; ?>"><?php echo $provincia->nombre; ?></option>
@@ -142,11 +146,17 @@ include_once("header.php");
                             </select>
                         </div>
                         <div class="col-6 form-group">
-                            <label for="txtTelefono">Localidad:</label>
-                            <select class="form-control" name="lstLocalidad" id="lstLocalidad" required>
+                            <label for="txtLocalidad">Localidad:</label>
+                            <select class="form-control" name="lstLocalidad" id="lstLocalidad" data-live-search="true" required>
                                 <option value="" disabled selected>Seleccionar</option>
-                                <option value="1">CABA</option>
-                            </select>
+                             <?php foreach ($aLocalidades as $localidad): ?>
+                                <?php if ($idlocalidad == $localidad->fk_idlocalidad): ?>
+                                    <option selected value="<?php echo $localidad->idlocalidad; ?>">
+                                <?php echo $localidad->nombre; ?></option>
+                                <?php else : ?>
+                                    <option value="<?php echo $localidad->idlocalidad; ?>"><?php echo $localidad->nombre; ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?></select>
                         </div>
                         <div class="col-12 form-group">
                             <label for="txtTelefono">Dirección:</label>
