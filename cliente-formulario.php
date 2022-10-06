@@ -6,16 +6,16 @@ include_once "entidades/cliente.php";
 include_once "entidades/provincia.php";
 include_once "entidades/localidad.php";
 
-$cliente = new Cliente();
-$cliente->cargarFormulario($_REQUEST);
+$cliente = new Cliente(); 
+$cliente->cargarFormulario($_REQUEST); //request va a obtener los datos que vienen desde POST
 
-$pg = "Listado de clientes";
+$pg = "Listado de clientes";//titulo de la pag
 
 if($_POST){
     if(isset($_POST["btnGuardar"])){
         if(isset($_GET["id"]) && $_GET["id"] > 0){
               //Actualizo un cliente existente
-              $cliente->actualizar();
+              $cliente->actualizar(); //voy a saber si el cliente lo estoy actualizando o insertando porque el id aparece en el codigo de la pagino ej; .php?=id23
         } else {
             //Es nuevo
             $cliente->insertar();

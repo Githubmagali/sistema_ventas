@@ -45,9 +45,14 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
 
     public function insertar()
     {
+        
         //Instancia la clase mysqli con el constructor parametrizado
+        //Cuatro pasos; Se conecta a la base de datos con la msqly, creandolo primero
+        //con el contructor parametrizado
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        //Arma la query
+        
+        //(Congigg::BBDD_HOST es una cadena de conexion cada motor de base de datos tiene un puerto distinto msqly)
+        //Arma la query c $sql
         $sql = "INSERT INTO clientes (
                     nombre,
                     cuit,
@@ -67,9 +72,10 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
                     $this->fk_idlocalidad,
                     '$this->domicilio'
                 );";
-                //si tienen '' porque es una stream '$this->nombre',
-        // print_r($sql);exit;
-        //Ejecuta la query
+                //si tienen '' porque es una stream (que es lineal) '$this->nombre',
+       //si tienen '' porque es una stream '$this->nombre',
+        
+        // if Ejecuta la query
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
@@ -100,7 +106,7 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
         $mysqli->close();
     }
 
-    public function eliminar()
+    public function eliminar() //elimina por ID que lo toma del propio objeto
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "DELETE FROM clientes WHERE idcliente = " . $this->idcliente;
@@ -111,7 +117,13 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
         $mysqli->close();
     }
 
-    public function obtenerPorId()
+    public function obtenerPorId()//obtener el cliente
+    //crea el objeto
+    //arma la base de datos con $sql=SELECT la query
+    //FROM selecciona toda la informacion de la table "clientes"
+    //where $this->idcliente lo lee del propio objeto
+    //if arroja un resultado (objeto)
+    //si es verdadero avanza y para PODER MANIPULAR a estos resultados necesitamos ejecutar el metodo fetch_assoc
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idcliente,
@@ -129,7 +141,10 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
-        //Convierte el resultado en un array asociativo. Va de derecha a iz, le pregunta a fetch_assoc almacena todo eso en fila y si fila tiene datos
+        //Convierte el resultado en un array asociativo. Trae una SOLA FILA DE DATOS NOMAS!!Va de derecha a iz, le pregunta a fetch_assoc almacena todo eso en fila y si fila tiene datos
+        //primero hace en fetch_assoc, todo eso lo almacena en fila
+        //pregunta $fila contienen datos, si contiene datos ingresa
+        //si fila contiene datos SELO ASIGNA AL PROPIO OBJETO
         //le almacena datos al prodpio objeto
         if ($fila = $resultado->fetch_assoc()) {
             $this->idcliente = $fila["idcliente"];
@@ -142,7 +157,7 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
             } else {
                 $this->fecha_nac = "";
             }
-            $this->fk_idprovincia = $fila["fk_idprovincia"];
+            $this->fk_idprovincia = $fila["fk_idprovincia"]; //La llave foranea se traa como un numero
             $this->fk_idlocalidad = $fila["fk_idlocalidad"];
             $this->domicilio = $fila["domicilio"];
         }
@@ -150,7 +165,9 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
 
     }
 
-     public function obtenerTodos(){
+     public function obtenerTodos(){ 
+        //Obtener todos es por si queremos traer la info de todos los clientes, entonces no pongo ninguna clusula WHERE
+        //PORQUE ES UN OBTENER TODOS
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT 
                     idcliente,
@@ -168,11 +185,15 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
         }
 
         $aResultado = array();
+        //la query arroja un objeto resultado
+        //array almacen los diferentes resultados porque tenemos una fila de datos
+       
         if($resultado){
             //Convierte el resultado en un array asociativo
 //fila trae los satos 
+//while es un bucle y sin el se alamcenaria todo en 
             while($fila = $resultado->fetch_assoc()){ // mientras fila tenga datos lo va a hacer una y otra vez
-                $entidadAux = new Cliente(); //entidadAux me sirve para crear el objeto
+                $entidadAux = new Cliente(); //entidadAux me sirve para crear el objeto, LOS DATOS LOS TRAE $FILA
                 $entidadAux->idcliente = $fila["idcliente"];
                 $entidadAux->nombre = $fila["nombre"];
                 $entidadAux->cuit = $fila["cuit"];

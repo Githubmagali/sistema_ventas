@@ -49,10 +49,15 @@ class Venta //Cliente es una entidad solo en las tables es en prural
 
     public function insertar()
     {
+        //tiene 4 instancias el metodo insertar, primero se conecta con la base de datos usando la clase mysqli
+        //crea el objeto mysqli con el constructor parametrizado que tiene la cadena de conexion
+        //cada base de datos tiene un puerto distinto, el de myslqli es 3306 
         //Instancia la clase mysqli con el constructor parametrizado
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        //Arma la query
-        $sql = "INSERT INTO ventas (
+        //Arma la query que es un stream que va a insertar dentro de a tabla clientes las columnas que 
+        //nosotros indicamos y los valores del propio objeto VALUES ($this->fk_idcliente... )en el orden de INSERT,
+        //no importa el orden de la tabla, solo este
+        $sql = "INSERT INTO ventas ( 
                     fk_idcliente,
                     fk_idproducto,
                     fecha,
@@ -68,9 +73,14 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                     $this->total,
                    
                 );";
+                
+        //El stream lo toma el apache y lo ejecuta en msql a traves de la clase msqli
                 //si tienen '' porque es una stream '$this->nombre',
-        // print_r($sql);exit;
+        // if llama a la query en la msqli y le enviamos por PARAMETRO este stream ( objeto de tipo resource que puede ser leído o escrito de una forma lineal)
+        //esto lo que va a hacer es ejecutar el stram dentro de la base de datos
         //Ejecuta la query
+        //cuando insertamos un registro en la table el id es AUTOINCREMENTAL, no sabemos que nro le va a poner PERO nos lo infrma a traves de  $mysqli->insert_id
+        //asi obtenemos el utimo id insertado QUE se lo asignamos al prodpio objeto
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
@@ -80,7 +90,8 @@ class Venta //Cliente es una entidad solo en las tables es en prural
         $mysqli->close();
     }
 
-    public function actualizar()
+    public function actualizar() //metodo actualizar con la clausula UPDATE que tmbn son 4 partes
+    //se crea el objeto msqli
     {
 
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
@@ -90,7 +101,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                 fecha= '".$this->fecha."',
                 cantidad = '".$this->cantidad."',
                 preciounitario=  '".$this->preciounitario."',
-                total =  '".$this->total."',
+                total =  '".$this->total."'
                 
                 WHERE idventa = ".$this->idventa;
 
