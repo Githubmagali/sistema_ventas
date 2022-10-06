@@ -1,12 +1,11 @@
 <?php
-
+  //este esta bien
 include_once "config.php";
-include_once "usuario.php";
+include_once "entidades/usuario.php";
 $pg= "Usuarios";
 
-$usuario= new Usuario();
-$aUsuario = $usuario->obtenerPorUsuario($usuario);
-
+$entidadUsuario = new Usuario();
+$aUsuarios = $entidadUsuario->obtenerTodos();
 include_once("header.php");
 ?>
 
@@ -19,11 +18,15 @@ include_once("header.php");
         </div>
     </div>
     <table class="table table-hover border">
+        <tr>Usuario</tr>
         <tr>Nombre</tr>
+        <tr>Correo</tr>
         <tr>Acciones</tr>
         <?php foreach ($aUsuarios as $usuario){ ?>
             <tr>
+                <td><?php echo $usuario->usuario; ?></td>
                 <td><?php echo $usuario->nombre; ?></td>
+                <td><?php echo $usuario->correo; ?></td>
                 <td style="width: 110px;">
             <a href="usuario-formulario.php?id=<?php echo $usuario->idusuario; ?>"><i class="fas fa-search"></i></a>
         </td>
@@ -34,24 +37,3 @@ include_once("header.php");
 
 <?php include_once("footer.php"); ?>
  
-<div class="container-fluid">
-    <h1 class="h3">Usuarios</h1>
-    <div class="row">
-        <div class="col-12">
-            <a href="usuario-formulario.php" class="btn">Nuevo</a>
-        </div>
-    </div>
-    <table class="table table-hover border">
-        <tr>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
-        <?php foreach ($aUsuarios as $usuario){ ?>
-            <tr>
-                <td><?php echo $usuario->nombre; ?></td>
-                <td stlyle="width: 110px;"></td>
-                <a href="usuario-formulario.php?id=<?php echo $usuario->idusuario;?>"></a>
-            </tr>
-<? }?>
-    </table>
-</div>

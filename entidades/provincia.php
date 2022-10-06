@@ -4,8 +4,7 @@ class Provincia
 {
     private $idprovincia;
     private $nombre;
-    
-    
+
     public function __get($atributo)
     {
         return $this->$atributo;
@@ -42,6 +41,4 @@ class Provincia
             }
         }
         return $aResultado;
-    }
-
-}
+    }}

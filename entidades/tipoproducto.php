@@ -26,13 +26,10 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
 
     public function cargarFormulario($request)
     {
-        $this->idtipoproducto = isset($request["id"]) ? $request["id"] : "";
-        $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
+        $this->idtipoproducto = isset($request["id"])? $request["id"] : "";
+        $this->nombre = isset($request["txtNombre"])? $request["txtNombre"] : "";
         //request lee tanto GET como POST
-        
-     
-       
-    }
+        }
 
     public function insertar()
     {
@@ -44,9 +41,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
         //Arma la query
         $sql = "INSERT INTO tipo_productos (
                     nombre
-                   
-                   
-                ) VALUES (
+                   ) VALUES (
                     '$this->nombre'
                     
                     
@@ -67,10 +62,10 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
     {
 
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        $sql = "UPDATE tipo_produtos SET
-                nombre = ' $this->nombre',
+        $sql = "UPDATE tipo_productos SET
+                nombre = '$this->nombre'
                 
-                WHERE idtipoproducto = ".$this->idtipoproducto;
+                WHERE idtipoproducto = " . $this->idtipoproducto;
 
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -81,7 +76,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
     public function eliminar() //elimina por ID que lo toma del propio objeto
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
-        $sql = "DELETE FROM tipo_productos WHERE idtipoproducto= " . $this->idtipoprodcuto;
+        $sql = "DELETE FROM tipo_productos WHERE idtipoproducto = " . $this->idtipoproducto;
         //Ejecuta la query
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -100,10 +95,9 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idtipoproducto,
-                       
-                       
+                        nombre   
                 FROM tipo_productos
-                WHERE idtipoproducto =  $this->idproducto";
+                WHERE idtipoproducto = " .  $this->idtipoproducto;
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
@@ -129,10 +123,8 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT 
                     idtipoproducto,
-                        nombre,
-                        
-                       
-                FROM tipo_productos";
+                        nombre
+                        FROM tipo_productos";
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
@@ -143,7 +135,7 @@ class TipoProducto //Cliente es una entidad solo en las tables es en prural
 //fila trae los satos 
             while($fila = $resultado->fetch_assoc()){ // mientras fila tenga datos lo va a hacer una y otra vez
                 $entidadAux = new TipoProducto(); //entidadAux me sirve para crear el objeto
-                $entidadAux->idproducto = $fila["idtipoproducto"];
+                $entidadAux->idtipoproducto = $fila["idtipoproducto"];
                 $entidadAux->nombre = $fila["nombre"];
                 
                

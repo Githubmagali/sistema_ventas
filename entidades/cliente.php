@@ -1,6 +1,6 @@
 <?php
 
-class Cliente //Cliente es una entidad solo en las tables es en prural
+class Cliente 
 {
     private $idcliente;
     private $nombre;
@@ -12,7 +12,7 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
     private $fk_idlocalidad;
     private $domicilio;
 
-    public function __construct() //constructor por defecto
+    public function __construct() 
     {
 
     }
@@ -29,6 +29,8 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
     }
 
     public function cargarFormulario($request)
+    //si recargo los datos y hago POST viene con datos el $request cliente almacenandolo en el PROPIO OBJETO, pero si no hago
+//POST el unico que puede almacenar es idcliente que va a ir cuando ingreso por la lupa
     {
         $this->idcliente = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
@@ -98,6 +100,7 @@ class Cliente //Cliente es una entidad solo en las tables es en prural
                 fk_idprovincia =  '".$this->fk_idprovincia."',
                 fk_idlocalidad =  '".$this->fk_idlocalidad."',
                 domicilio =  '".$this->domicilio."'
+                
                 WHERE idcliente = ".$this->idcliente;
 
         if (!$mysqli->query($sql)) {

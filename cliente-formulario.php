@@ -8,16 +8,18 @@ include_once "entidades/localidad.php";
 
 $cliente = new Cliente(); 
 $cliente->cargarFormulario($_REQUEST); //request va a obtener los datos que vienen desde POST
-
+//si hago POST $cliente va a estar lleno de los datos del formulario
 $pg = "Listado de clientes";//titulo de la pag
-
-if($_POST){
+//crea la variable $pg
+if($_POST){ //boton del tipo SUBMIT
+    //Voy a saber si esta actualizando o es nuvo por el id en la query stream. Si el id es mayor que 0
+    //voy a actualizar sino voy a insertar
     if(isset($_POST["btnGuardar"])){
         if(isset($_GET["id"]) && $_GET["id"] > 0){
               //Actualizo un cliente existente
               $cliente->actualizar(); //voy a saber si el cliente lo estoy actualizando o insertando porque el id aparece en el codigo de la pagino ej; .php?=id23
         } else {
-            //Es nuevo
+            //Es nuevo porque el valor es menor que 0
             $cliente->insertar();
         }
         $msg["texto"] = "Guardado correctamente";

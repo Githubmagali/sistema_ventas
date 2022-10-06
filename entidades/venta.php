@@ -9,9 +9,6 @@ class Venta //Cliente es una entidad solo en las tables es en prural
     private $cantidad;
     private $preciounitario;
     private $total;
-
-    private $nombre_cliente;
-    private $nombre_producto;
    
 
     public function __construct() //constructor por defecto
@@ -45,6 +42,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
         $this->preciounitario = isset($request["txtPreciouni"]) ? $request["txtPreciouni"] :0;
         $this->total = $this->preciounitario * $this->cantidad;
        
+       
     }
 
     public function insertar()
@@ -64,13 +62,15 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                     cantidad,
                     preciounitario,
                     total
+                    
                 ) VALUES (
                     $this->fk_idcliente,
                     $this->fk_idproducto, 
                     '$this->fecha',
                     $this->cantidad,
                     $this->preciounitario,
-                    $this->total,
+                    $this->total
+                   
                    
                 );";
                 
@@ -102,6 +102,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                 cantidad = '".$this->cantidad."',
                 preciounitario=  '".$this->preciounitario."',
                 total =  '".$this->total."'
+               
                 
                 WHERE idventa = ".$this->idventa;
 
@@ -133,6 +134,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                         preciounitario,
                         total
                         
+                        
                 FROM ventas
                 WHERE idventa = $this->idventa";
         if (!$resultado = $mysqli->query($sql)) {
@@ -148,7 +150,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
             $this->cantidad = $fila["cantidad"];
             $this->preciounitario = $fila["preciounitario"];
             $this->total = $fila["total"];
-            
+           
         }
         $mysqli->close();
 
@@ -164,6 +166,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                     cantidad,
                     preciounitario,
                     total
+                   
                 FROM ventas";
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -182,6 +185,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
                 $entidadAux->cantidad = $fila["cantidad"];
                 $entidadAux->preciounitario = $fila["preciounitario"];
                 $entidadAux->total= $fila["total"];
+             
                
                 $aResultado[] = $entidadAux;
             }

@@ -70,7 +70,7 @@ class Producto {
                 fk_idtipoproducto = $this->fk_idtipoproducto,
                 cantidad = $this->cantidad,
                 precio = $this->precio,
-                descripcion = '$this->descripcion,
+                descripcion = '$this->descripcion',
                 imagen = '$this->imagen'
                 WHERE idproducto = $this->idproducto";
           
