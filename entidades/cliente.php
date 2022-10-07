@@ -49,12 +49,12 @@ class Cliente
     {
         
         //Instancia la clase mysqli con el constructor parametrizado
-        //Cuatro pasos; Se conecta a la base de datos con la msqly, creandolo primero
+        //Cuatro pasos; Se conecta a la base de datos con la msqli, creandolo primero
         //con el contructor parametrizado
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         
         //(Congigg::BBDD_HOST es una cadena de conexion cada motor de base de datos tiene un puerto distinto msqly)
-        //Arma la query c $sql
+        //Arma la query con $sql
         $sql = "INSERT INTO clientes (
                     nombre,
                     cuit,

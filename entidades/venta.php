@@ -11,6 +11,9 @@ class Venta //Cliente es una entidad solo en las tables es en prural
     private $total;
    
 
+    private $nombre_cliente;
+    private $nombre_producto;
+
     public function __construct() //constructor por defecto
     {
         $this->cantidad = 0;
@@ -191,6 +194,48 @@ class Venta //Cliente es una entidad solo en las tables es en prural
             }
         }
         return $aResultado; //finalizado el bucle devuelve el resultado
+    }
+
+    public function cargarGrilla(){
+        $mysqli= new mysqli (Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+    $sql = "SELECT
+    V.idventa,
+    V.fecha,
+    V.cantidad,
+    v.fk_idcliente,
+    C.nombre as nombre_cliente,
+    V.fk_idproducto,
+    V.total,
+    V.preciounitario,
+    P.nombre as nombre_producto
+    FROM ventas V
+    INNER JOIN clientes C ON V.fk_idcliente= C.idcliente
+    INNER JOIN productos P ON V.fk_idproducto= P.idproducto
+    ORDER BY V.fecha DESC";
+
+if (!$resultado = $mysqli->query($sql)) {
+    printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+    
+    }
+    $aResultado = array();
+        if($resultado){
+            //Convierte el resultado en un array asociativo
+            while($fila = $resultado->fetch_assoc()){
+                $entidadAux = new Venta();
+                $entidadAux->idventa = $fila["idventa"];
+                $entidadAux->fk_idcliente = $fila["fk_idcliente"];
+                $entidadAux->fk_idproducto = $fila["fk_idproducto"];
+                $entidadAux->fecha = $fila["fecha"];
+                $entidadAux->cantidad = $fila["cantidad"];
+                $entidadAux->preciounitario = $fila["preciounitario"];
+                $entidadAux->nombre_cliente = $fila["nombre_cliente"];
+                $entidadAux->nombre_producto = $fila["nombre_producto"];
+                $entidadAux->total = $fila["total"];
+                $aResultado[] = $entidadAux;
+            }
+        }
+        $mysqli->close();
+        return $aResultado;
     }
 
 }
