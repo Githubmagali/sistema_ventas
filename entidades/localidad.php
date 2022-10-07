@@ -1,6 +1,7 @@
 <?php
 
-class Localidad{
+class Localidad
+{
     private $idlocalidad;
     private $nombre;
     private $fk_idprovincia;
