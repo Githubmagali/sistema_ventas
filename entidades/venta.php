@@ -202,7 +202,7 @@ class Venta //Cliente es una entidad solo en las tables es en prural
     V.idventa,
     V.fecha,
     V.cantidad,
-    v.fk_idcliente,
+    V.fk_idcliente,
     C.nombre as nombre_cliente,
     V.fk_idproducto,
     V.total,

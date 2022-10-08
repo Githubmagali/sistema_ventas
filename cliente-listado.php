@@ -7,6 +7,8 @@ $pg = "Listado de clientes";
 $cliente = new Cliente();
 $aClientes = $cliente->obtenerTodos();
 
+
+
 include_once("header.php");
 
 ?>
@@ -26,8 +28,8 @@ include_once("header.php");
             <th>Telefono</th>
             <th>Correo</th>
             <th>Fecha de nacimiento</th>
-            <th>Provincia</th>
-            <th>Localidad</th>
+            <th>Acciones</th>
+            
 
         </tr>
         <?php foreach ($aClientes as $cliente) { ?>
@@ -37,6 +39,7 @@ include_once("header.php");
                 <td><?php echo date_format(date_create($cliente->fecha_nac), "d/m/Y"); ?></td>
                 <td><?php echo $cliente->telefono; ?></td>
                 <td><?php echo $cliente->correo; ?></td>
+
                 <td>
                     <a href="cliente-formulario.php?id=<?php echo $cliente->idcliente; ?>"><i class="fas fa-search"></i></a>
                 </td>

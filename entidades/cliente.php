@@ -12,6 +12,8 @@ class Cliente
     private $fk_idlocalidad;
     private $domicilio;
 
+ 
+
     public function __construct() 
     {
 
@@ -216,5 +218,8 @@ class Cliente
         return $aResultado; //finalizado el bucle devuelve el resultado
     }
 
-}
+
+   
+    } 
+
 ?>
