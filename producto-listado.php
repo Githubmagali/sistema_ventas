@@ -29,8 +29,7 @@ include_once ("header.php"); //trae la info de html
         <th>Acciones</th>
     </tr>
     <?php foreach ($aProductos as $producto) { ?>
-        </div>
-    </div>
+   
         <tr>
         <td><img src="files/<?php echo $producto->imagen; ?>" class="img-thumbnail"></td>
             <td><?php echo $producto->nombre; ?></td>

@@ -11,25 +11,33 @@ $venta=new Venta();
 $venta->cargarFormulario($_REQUEST);
 
 
-if ($_POST) {
-
-    if (isset($_POST["btnGuardar"])) {
-        if (isset($_GET["id"]) && $_GET["id"] > 0) {
-            //Actualizo un usuario existente
-            $usuario->actualizar();
+if($_POST){
+    if(isset($_POST["btnGuardar"])){
+        if(isset($_GET["id"]) && $_GET["id"] > 0){
+              //Actualizo un cliente existente
+              $venta->actualizar();
         } else {
             //Es nuevo
-            $usuario->insertar();
+            $producto = new Producto();
+            $producto->idproducto = $venta->fk_idproducto;
+            $producto->obtenerPorId();
+            if($venta->cantidad <= $producto->cantidad){
+                $total = $venta->cantidad * $producto->precio;
+                $venta->total = $total;
+                $venta->insertar();
+
+                $producto->cantidad -= $venta->cantidad;
+                $producto->actualizar();
+            } else {
+                $msg = "No hay stock suficiente";
+            }
         }
-
-        $msg ["texto"]= "Guardado correctamente";
-        $msg["codigo"] = "Sin stock";
-
-    } else if (isset($_POST["btnBorrar"])) {
-        $usuario->eliminar();
-        header("Location: usuario-listado.php");
+    } else if(isset($_POST["btnBorrar"])){
+        $venta->eliminar();
+        header("Location: venta-listado.php");
     }
-}
+} 
+
 if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto"){
     $aResultado = array();
     $idProducto = $_GET["id"];
@@ -41,8 +49,9 @@ if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto"){
     echo json_encode($aResultado);
     exit;
 }
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $usuario->obtenerPorId();
+
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $venta->obtenerPorId();
 }
 
 $cliente = new Cliente();
@@ -50,7 +59,8 @@ $aClientes = $cliente->obtenerTodos();
 
 $producto = new Producto();
 $aProductos = $producto->obtenerTodos();
-    include_once("header.php"); 
+
+include_once("header.php"); 
 ?>
 
 <div class="container-fluid">

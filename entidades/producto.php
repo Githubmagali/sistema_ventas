@@ -31,6 +31,8 @@ class Producto {
         $this->cantidad = isset($request["txtCantidad"])? $request["txtCantidad"]: 0;
         $this->precio = isset($request["txtPrecio"])? $request["txtPrecio"]: 0;
         $this->descripcion = isset($request["txtDescripcion"])? $request["txtDescripcion"] : "";
+        
+      
     }
 
     public function insertar(){
@@ -51,7 +53,7 @@ class Producto {
                     $this->precio, 
                     '$this->descripcion',
                     '$this->imagen'
-                );";
+                         );";
         //Ejecuta la query
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -72,7 +74,8 @@ class Producto {
                 precio = $this->precio,
                 descripcion = '$this->descripcion',
                 imagen = '$this->imagen'
-                WHERE idproducto = $this->idproducto";
+                WHERE idproducto = ". $this->idproducto;
+              
           
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -89,6 +92,7 @@ class Producto {
         }
         $mysqli->close();
     }
+
 
     public function obtenerPorId(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);

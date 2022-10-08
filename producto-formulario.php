@@ -1,11 +1,9 @@
 
 <?php
-
 include_once "config.php";
 include_once "entidades/producto.php";
 include_once "entidades/tipoproducto.php";
 $pg = "Edición de producto";
-
 $producto = new Producto();
 $producto->cargarFormulario($_REQUEST);
 
@@ -57,9 +55,8 @@ if (isset($_GET["id"]) && $_GET["id"] > 0) {
 
 }
 
-$tipoProducto = new TipoProducto();
+$tipoProducto = new Tipoproducto();
 $aTipoProductos = $tipoProducto->obtenerTodos();
-
 
 include_once "header.php";
 ?>
@@ -119,10 +116,10 @@ include_once "header.php";
                 
             </div>
         </div>
-        <!-- /.container-fluid -->
+       
 
       </div>
-      <script> //https://ckeditor.com/ckeditor-5/download/
+      <script> 
         ClassicEditor
             .create( document.querySelector( '#txtDescripcion' ) )
             .catch( error => {
