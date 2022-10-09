@@ -4,6 +4,8 @@ include_once "config.php";
 include_once "entidades/producto.php";
 include_once "entidades/tipoproducto.php";
 $pg = "Edición de producto";
+
+
 $producto = new Producto();
 $producto->cargarFormulario($_REQUEST);
 
@@ -19,7 +21,7 @@ if ($_POST) {
             $nombreImagen = "$nombreRandom.$extension";
             move_uploaded_file($archivoTmp, "files/$nombreImagen");
         }
-
+//busco el producto en la base de datos para extraer el nombre anterios
         if (isset($_GET["id"]) && $_GET["id"] > 0) {
             $productoAnt = new Producto();
             $productoAnt->idproducto = $_GET["id"];

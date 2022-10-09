@@ -18,11 +18,12 @@ include_once("header.php");
         </div>
     </div>
     <table class="table table-hover border">
-        <tr>Usuario</tr>
-        <tr>Nombre</tr>
-        <tr>Correo</tr>
-        <tr>Acciones</tr>
+        <th  style="width: 170px;">Usuario</th>
+        <th style="width: 130px;">Nombre</th>
+        <th style="width: 150px;">Correo</th>
+        <th style="width: 110px;">Acciones</th>
         <?php foreach ($aUsuarios as $usuario){ ?>
+            
             <tr>
                 <td><?php echo $usuario->usuario; ?></td>
                 <td><?php echo $usuario->nombre; ?></td>

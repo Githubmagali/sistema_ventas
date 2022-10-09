@@ -36,13 +36,13 @@ class Usuario {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         //Arma la query
         $sql = "INSERT INTO usuarios (
-                    usuario, 
+                   usuario,  
                     clave, 
                     nombre,
                     apellido, 
                     correo
                 ) VALUES (
-                    '" . $this->usuario ."', 
+                  '" . $this->usuario.  "',
                     '" . $this->clave ."', 
                     '" . $this->nombre ."',
                     '" . $this->apellido ."',
@@ -174,6 +174,7 @@ class Usuario {
         $claveEncriptada = password_hash($clave, PASSWORD_DEFAULT);
         return $claveEncriptada;
     }
+    //envia por parametro la clave y la devuelve encriptada
 
     public function verificarClave($claveIngresada, $claveEnBBDD){
         return password_verify($claveIngresada, $claveEnBBDD);
