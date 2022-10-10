@@ -53,7 +53,7 @@ class Producto {
                     $this->precio, 
                     '$this->descripcion',
                     '$this->imagen'
-                         );";
+                );";
         //Ejecuta la query
         if (!$mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -63,6 +63,7 @@ class Producto {
         //Cierra la conexión
         $mysqli->close();
     }
+
 
     public function actualizar(){
 

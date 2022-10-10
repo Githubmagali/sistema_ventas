@@ -42,7 +42,7 @@ class Usuario {
                     apellido, 
                     correo
                 ) VALUES (
-                  '" . $this->usuario.  "',
+                     '" . $this->usuario ."',
                     '" . $this->clave ."', 
                     '" . $this->nombre ."',
                     '" . $this->apellido ."',

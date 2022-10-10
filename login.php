@@ -11,9 +11,8 @@
   //$msg="Usuario o clave incorrecto";
 //}
 //}
-
-include_once ("config.php");
 include_once ("entidades/usuario.php");
+include_once ("config.php");
 
 if($_POST){
   $usuario = trim($_REQUEST["txtUsuario"]);
