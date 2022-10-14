@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 if(!isset($_SESSION["nombre"])){
   header("location:login.php");
 }

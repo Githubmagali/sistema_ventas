@@ -3,7 +3,7 @@
 
 include_once "config.php";
 include_once "entidades/tipoproducto.php";
-
+include_once "entidades/producto.php";
 
 
 $tipoproducto = new tipoProducto();
@@ -20,15 +20,23 @@ if($_POST){
             $tipoproducto->insertar();
         }
     } else if(isset($_POST["btnBorrar"])){
-        $tipoproducto->eliminar();
-        header("Location: tipoproducto-listado.php");
+        $tipoproducto->cargarFormulario($_REQUEST);
+   
+
+        $producto = new Producto();
+        if ($producto->obtenerporTipo($tipoProducto->idtipoproducto)){
+            $msg["texto"] = "No se puede elimina un tipo de producto con productos asociados.";
+            $msg["codigo"] = "alert-danger";
+        } else {
+            $tipoProducto->eliminar();
+            header("Location: tipoproducto-listado.php");
+        }
     }
-} else if(isset($_REQUEST["id"])){
-    $tipoProducto->obtenerPorId();
+    if (isset($_GET["id"]) && $_GET["id"] > 0){
+        $tipoProducto->cargarFormulario($_REQUEST);
+        $tipoProducto->obtenerPorId();
+    }
 }
-
-
-
 
 include_once "header.php";
 ?>
@@ -49,7 +57,7 @@ include_once "header.php";
            <div class="row">
                 <div class="col-12  form-group">
                     <label for="txtCuit">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre; ?>">
+                    <input type="text" required="" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre; ?>">
                 </div>
                 
                 

@@ -66,28 +66,27 @@ include_once("header.php");
 <div class="container-fluid">
 <h1 class="h3 mb-4 text-gray-800">Venta</h1>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <a href="ventas.php"class="btn btn-primary">Listado</a>
             <a href="venta-formulario.php"class="btn btn-primary">Nuevo</a>
             <button type="submit"class="btn btn-success"id="btnGuardar"name="btnGuardar">Guardar</button>
             <button type="submit" class="btn btn-danger"id="btnBorrar"name="btnBorrar">Borrar</button>
         </div>
     </div>
-    <div class="container-fluid">
     
-          <?php if(isset($msg)){ ?>
+    
+                                              
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 form-group">
+                <?php if(isset($msg) && $msg != ""){ ?>
                     <div class="alert <?php echo $msg["codigo"]; ?>" role="alert">
                         <?php echo $msg["texto"]; ?>
                     </div>
-                </div>
-            </div>
             <?php } ?>
            
 
             <label for="txtFechaNac" class="d-block">Fecha y hora</label>
-            <select name="txtDia" id="txtDia"class="form-control"style="width: 80px">
+            <select name="txtDia" id="txtDia"class="form-control d-inline"style="width: 80px">
                 <option selected=""disabled="">DD</option>
                 <?php for($i=1; $i <= 31; $i++): ?>
                     <?php if($venta->fecha != "" && $i == date_format(date_create($venta->fecha), "d")): ?>
@@ -117,14 +116,17 @@ include_once("header.php");
                             <?php endif; ?>
                         <?php endfor; ?> ?>
                     </select>
-                            </div>
+                           
                     
                     <?php if($venta->fecha == ""): ?>
                     <input type="time" required="" class="form-control d-inline" name="txtHora" id="txtHora" value="00:00"style="width: 120px">
                     <?php else: ?>
                     <input type="time" required="" class="form-control d-inline" name="txtHora" id="txtHora"style="width: 120px" value="<?php echo date_format(date_create($venta->fecha), "H:i"); ?>">
                     <?php endif; ?>
+
+
                    <div class="col-6 form-group">
+
                    <label for="lstCliente">Cliente:</label>
                     <select required="" class="form-control selectpicker" data-live-search="true" name="lstCliente" id="lstCliente">
                         <option value="" disabled selected>Seleccionar</option>
@@ -136,8 +138,7 @@ include_once("header.php");
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
-                   
-                            </div>
+                   </div>
                             <div class="col-6 form-group">
                             <label for="lstProducto">Producto:</label>
                     <select required="" class="form-control selectpicker" data-live-search="true" name="lstProducto" id="lstProducto" onchange="fBuscarPrecio();">
@@ -169,7 +170,7 @@ include_once("header.php");
         </div>
      
 
-      </div>
+        </div>
       
 <script>
     
